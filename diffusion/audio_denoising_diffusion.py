@@ -39,7 +39,7 @@ from neural_codec.encodec_wrapper import EncodecWrapper
 from utils.utils import get_output_dir
 
 
-ModelPrediction =  namedtuple('ModelPrediction', ['pred_eps', 'pred_x_start', 'pred_v', 'latents'])
+ModelPrediction =  namedtuple('ModelPrediction', ['pred_eps', 'pred_x_start', 'pred_v'])
 
 # Recommendation from https://arxiv.org/abs/2303.09556
 MIN_SNR_GAMMA = 5
@@ -339,7 +339,6 @@ class GaussianDiffusion(nn.Module):
             fill_mask = torch.full_like(z_t, fill_value=0, dtype=torch.bool)
             
         x_start = None
-        latents = None
 
         for time, time_next in tqdm(time_pairs, desc = 'sampling loop time step', total = self.sampling_timesteps):
             # get predicted x0
